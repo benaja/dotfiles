@@ -9,7 +9,11 @@ echo 'Install homebrew'
 echo '----------------'
 sudo rm -rf /usr/local/Cellar /usr/local/.git && brew cleanup  || true
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
 
 echo 'Install fonts'
 echo '-----------------'
@@ -147,6 +151,10 @@ echo 'Install pnpm'
 echo '------------'
 npm install -g pnpm
 
+echo 'Install composer'
+echo '-------------------'
+brew install composer
+
 echo 'Install ghostscript'
 echo '-------------------'
 brew install ghostscript
@@ -155,7 +163,7 @@ echo 'Install zsh-autosuggestions'
 echo '---------------------------'
 brew install zsh-autosuggestions
 
-echo 'Install zsh-autosuggestions'
+echo 'Install prettyping'
 echo '---------------------------'
 brew install prettyping
 
@@ -167,7 +175,7 @@ echo 'Install ffmpeg'
 echo '---------------------------'
 brew install ffmpeg
 
-echo 'Install ffmpeg'
+echo 'Install gpg'
 echo '---------------------------'
 brew install gpg
 

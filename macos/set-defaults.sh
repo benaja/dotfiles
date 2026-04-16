@@ -46,6 +46,8 @@ defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
 # Disable automatic termination of inactive apps
 defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
 # Disable the crash reporter
 #defaults write com.apple.CrashReporter DialogType -string "none"
 
@@ -155,6 +157,12 @@ defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
 
 # Disable the warning before emptying the Trash
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
 
 # Show the ~/Library folder
 chflags nohidden ~/Library
