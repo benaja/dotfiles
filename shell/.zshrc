@@ -179,6 +179,40 @@ unset file
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
+# Auto-switch Node based on .nvmrc when changing directories
+autoload -U add-zsh-hook
+load-nvmrc() {
+  # Only run if nvm is available (nvm.sh sourced successfully)
+  command -v nvm >/dev/null 2>&1 || return 0
+
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc 2>/dev/null)"
+
+  # If there's no .nvmrc in this directory tree, don't do anything.
+  [[ -n "$nvmrc_path" ]] || return 0
+
+  local requested
+  requested="$(<"$nvmrc_path")"
+  [[ -n "$requested" ]] || return 0
+
+  local current requested_resolved
+  current="$(nvm version 2>/dev/null)"
+  requested_resolved="$(nvm version "$requested" 2>/dev/null)"
+
+  # If the requested version isn't installed yet, install it.
+  if [[ "$requested_resolved" == "N/A" ]]; then
+    nvm install "$requested" >/dev/null
+    requested_resolved="$(nvm version "$requested" 2>/dev/null)"
+  fi
+
+  if [[ -n "$requested_resolved" && "$requested_resolved" != "N/A" && "$current" != "$requested_resolved" ]]; then
+    nvm use --silent >/dev/null
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

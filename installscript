@@ -72,14 +72,14 @@ echo 'install z fork'
 echo '------------'
 git clone https://github.com/agkozak/zsh-z  $HOME/.oh-my-zsh/custom/plugins/zsh-z
 
-echo 'Install node version manager (nvm)'
-echo '-----------'
-brew install nvm
+# echo 'Install node version manager (nvm)'
+# echo '-----------'
+# brew install nvm
 
 # Ensure we use the Homebrew-installed nvm (some setups export NVM_DIR elsewhere, e.g. Herd)
-export NVM_DIR="$HOME/.nvm"
-mkdir -p "$NVM_DIR"
-\. "$(brew --prefix nvm)/nvm.sh"
+# export NVM_DIR="$HOME/.nvm"
+# mkdir -p "$NVM_DIR"
+# \. "$(brew --prefix nvm)/nvm.sh"
 
 
 echo 'Install pkg-config'
